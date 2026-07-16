@@ -32,5 +32,10 @@ Para que el sistema funcione, es necesario realizar una configuración manual ta
 
 
 
-# Ignorar carpeta de respaldos
-/backs/
+## 🔒 Seguridad del Servidor
+
+Para proteger tus datos contra descargas no autorizadas, es **obligatorio** configurar las restricciones de acceso en tu servidor. 
+
+1. **Archivo .htaccess:** Asegúrate de incluir el archivo `.htaccess` que se encuentra en este repositorio en la misma carpeta que el `proxy.php`. Esto evitará que navegadores o herramientas externas puedan acceder directamente a tu archivo `kardex.db` o a los respaldos guardados en la carpeta `/backs`.
+
+2. **Permisos de carpeta:** Aunque el script necesita permisos de escritura (para crear los respaldos), intenta que la carpeta no tenga permisos de ejecución de scripts innecesarios si tu proveedor de hosting lo permite.
