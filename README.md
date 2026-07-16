@@ -1,57 +1,36 @@
-# Kardex-Tauro-Proxy
-Proxy SQLite PHP para Kardex Tauro
+# Kardex Tauro: Remote SQLite Proxy
 
-# SQLite PHP Proxy Bridge
+Este es el script de servidor diseñado exclusivamente para permitir que la aplicación de escritorio **Kardex Tauro** se conecte y sincronice con una base de datos **SQLite** alojada remotamente.
 
-Este script es un puente ligero diseñado para permitir que aplicaciones de escritorio interactúen con una base de datos **SQLite** alojada en un servidor web remoto mediante peticiones HTTP.
+El script actúa como un puente (proxy) que recibe consultas desde tu software, las ejecuta sobre el archivo de base de datos en el servidor y devuelve los resultados en formato JSON.
 
-Es ideal para software que necesita persistencia en la nube sin la complejidad de gestionar un motor de base de datos cliente-servidor (como MySQL o PostgreSQL).
+## 🚀 Configuración Inicial
 
-## 🚀 Características
+Para que el sistema funcione, es necesario realizar una configuración manual tanto en el script como en tu aplicación:
 
-*   **Arquitectura Ultra-Ligera:** Un solo archivo `.php` centralizado.
-*   **Seguridad:** Autenticación basada en tokens (HMAC SHA-256) para proteger las consultas.
-*   **Versatilidad:** Soporta ejecuciones de consulta (`query`), sentencias de modificación (`nonquery`), escalares (`scalar`) y `transacciones` atómicas.
-*   **Gestión de BD:** Funciones integradas de `backup` automático (con purga de archivos antiguos) y descarga/restauración de la base de datos.
-*   **Compatibilidad:** Formato de respuesta JSON estándar, listo para deserializar en C#, Java, Python o cualquier otro lenguaje.
+1.  **Preparación del Servidor:**
+    *   Crea una carpeta en tu servidor web.
+    *   Copia el archivo `proxy.php` en dicha carpeta.
+    *   Coloca el archivo de tu base de datos (`kardex.db`) dentro de la misma carpeta.
+    *   **Importante:** Asegúrate de que esta carpeta tenga **permisos completos** de lectura y escritura para el servidor web (ej. `chmod 775` o `777` según el entorno).
 
-## 🛠️ Instalación
+2.  **Configuración del Script (`proxy.php`):**
+    Abre el archivo y ajusta las siguientes variables:
+    *   `$remotePass`: Define la contraseña que también configurarás dentro de Kardex Tauro.
+    *   `$jwtSecret`: Establece una frase secreta única y compleja para la generación de tokens (cámbiala por seguridad).
 
-1.  Copia `proxy.php` a tu servidor.
-2.  Asegúrate de que el directorio tenga permisos de escritura (para el archivo `.db` y la carpeta `/backs`).
-3.  Configura las credenciales en la sección de configuración del script:
-    *   `$usuarioValido` / `$passwordValido`: Tus credenciales de acceso.
-    *   `$jwtSecret`: Una cadena única y compleja.
+3.  **Configuración en Kardex Tauro:**
+    En el menú de configuración de tu software Kardex Tauro:
+    *   Ingresa la **URL completa** donde alojaste el `proxy.php`.
+    *   Ingresa el mismo **Password** que definiste en la variable `$remotePass` del script.
 
-## 📋 Uso del API
+## 🔒 Notas de Seguridad
 
-Todas las peticiones deben ser `POST` enviando un JSON.
+*   **Protección de Archivos:** Configura tu servidor (vía `.htaccess` si usas Apache) para **denegar el acceso público directo** al archivo `.db` y a la carpeta `/backs`.
+*   **HTTPS:** Se recomienda encarecidamente utilizar una conexión HTTPS para asegurar que la contraseña y los datos transmitidos entre tu escritorio y el servidor no sean interceptados.
+*   **Secreto del Token:** Asegúrate de cambiar el valor por defecto de `$jwtSecret`. No compartas esta clave con terceros.
 
-### Acciones disponibles
-*   `login`: Autenticación para obtener el token.
-*   `query`: Ejecuta `SELECT` y devuelve los datos.
-*   `nonquery`: Ejecuta `INSERT`, `UPDATE`, `DELETE`.
-*   `scalar`: Retorna un único valor (ej. `SELECT COUNT(*)...`).
-*   `transaction`: Ejecuta múltiples sentencias en un bloque atómico.
-*   `download`: Descarga una copia de seguridad de la base de datos.
 
-## 🔒 Consideraciones de Seguridad (Importante)
-
-*   **HTTPS:** Es indispensable que el servidor tenga un certificado SSL activo para proteger los datos en tránsito.
-*   **Acceso al archivo:** Configura tu servidor web (Apache/Nginx) para **prohibir** el acceso público directo al archivo `kardex.db`.
-*   **Variables de entorno:** Se recomienda extraer las credenciales a un archivo `.env` o a un archivo de configuración fuera del alcance público del servidor.
-
-## 🛡️ Recomendación de seguridad para Git
-
-No subas tu archivo de base de datos ni tus configuraciones privadas al repositorio. Crea un archivo llamado `.gitignore` en la raíz de tu proyecto con el siguiente contenido:
-
-```text
-# Ignorar bases de datos
-*.db
 
 # Ignorar carpeta de respaldos
 /backs/
-
-# Ignorar archivos de configuración local
-config.php
-.env
