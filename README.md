@@ -4,9 +4,13 @@ Este es el script de servidor diseñado exclusivamente para permitir que la apli
 
 El script actúa como un puente (proxy) que recibe consultas desde tu software, las ejecuta sobre el archivo de base de datos en el servidor y devuelve los resultados en formato JSON.
 
+Visita la página oficial de [Kardex Tauro](https://kardex-tauro.muisca.co/).
+
 ## 🚀 Configuración Inicial
 
 Para que el sistema funcione, es necesario realizar una configuración manual tanto en el script como en tu aplicación:
+
+![Configiracion del Proxy en el programa](config.png)
 
 1.  **Preparación del Servidor:**
     *   Crea una carpeta en tu servidor web.
