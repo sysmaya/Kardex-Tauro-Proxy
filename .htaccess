@@ -1,0 +1,17 @@
+# 1. Proteger el archivo de la base de datos
+<Files "kardex.db">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# 2. Proteger cualquier archivo .db (por seguridad extra)
+<FilesMatch "\.(db|sqlite|sqlite3)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# 3. Denegar acceso al listado de directorios y acceso a la carpeta backs
+<Directory "/backs">
+    Options -Indexes
+    Deny from all
+</Directory>
