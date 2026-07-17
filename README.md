@@ -2,6 +2,8 @@
 
 Este es el script de servidor diseñado exclusivamente para permitir que la aplicación de escritorio **Kardex Tauro** se conecte y sincronice con una base de datos **SQLite** alojada remotamente.
 
+![Configiracion del Proxy en el programa](inventarios-kardex-tauro.png)
+
 El script actúa como un puente (proxy) que recibe consultas desde tu software, las ejecuta sobre el archivo de base de datos en el servidor y devuelve los resultados en formato JSON.
 
 Visita la página oficial de [Kardex Tauro](https://kardex-tauro.muisca.co/).
