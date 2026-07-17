@@ -1,6 +1,6 @@
-# Kardex Tauro: Remote SQLite Proxy
+# Inventarios Kardex Tauro: Remote SQLite Proxy
 
-Este es el script de servidor diseñado exclusivamente para permitir que la aplicación de escritorio **Kardex Tauro** se conecte y sincronice con una base de datos **SQLite** alojada remotamente.
+Este es el script de servidor diseñado exclusivamente para permitir que la aplicación de escritorio **Inventarios Kardex Tauro** se conecte y sincronice con una base de datos **SQLite** alojada remotamente.
 
 ![Configiracion del Proxy en el programa](inventarios-kardex-tauro.png)
 
